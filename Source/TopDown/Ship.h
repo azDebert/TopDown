@@ -19,6 +19,8 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void SetShipSpeed(float NewSpeed);
+	float GetShipSpeed() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -28,6 +30,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+    // Destroys ship once health reaches 0
+	void HandleDeath();
+
+	// Getter for the player controller
+	APlayerController* GetShipPlayerController() const { return ShipPlayerController; }
+
+	bool bAlive = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float ShipSpeed = 420.f;
+	float DefaultShipSpeed = 420.f;
 
 private:
 
@@ -36,15 +49,12 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* CameraComponent;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float ShipSpeed = 420.f;
-
     UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnSpeed = 180.f;
 
 	void Move(float Value);
-
 	void Turn(float Value);
 
-	APlayerController* PlayerControllerRef;
+	// Reference to the player controller
+	APlayerController* ShipPlayerController;
 };

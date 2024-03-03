@@ -18,21 +18,29 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	// Destroy the enemy ship
+	void HandleDeath();
+
 protected:
 	
 	virtual void BeginPlay() override;
 
 private:
 
+	// Reference to the player
 	class AShip* Ship;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	float FireRange = 1000.f;
+	float FireRange = 600.f;
 
+	// Fire every few seconds
 	FTimerHandle FireRateTimerHandle;
-	float FireRate = 3.f;
+	float FireRate = 2.f;
+
+	// Check if the enemy is in range to fire at the player
 	void CheckFireCondition();
 
+	// Check if the player is in range
 	bool bInFireRange();
 
 };
